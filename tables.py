@@ -44,6 +44,23 @@ LABEL = dict(zip(SYSTEMS, ('Full prompt', 'No output restriction', 'No embodimen
 CLASSES = ('V0', 'V1', 'V2', 'VU', 'NV', 'R', 'RF', 'SB', 'TC', 'BE', 'QE', 'E', 'PI')
 VOID = {'V0', 'V1', 'V2', 'VU'}
 
+# Bibliographic metadata checked against the public Zenodo records on 2026-10-22.
+# Dates and titles are provenance, not trial results; all empirical counts below
+# remain calculated from the hash-asserted CSV.
+CHRONOLOGY = (
+    ('2025-12-08', 'Textual Emergence and the Void: A Framework for Observing High-Order Model Behavior in LLM Systems', '17856031', 'Initial observational framework.'),
+    ('2026-01-27', 'Alignment Is Correct, Safe, Reproducible Behavior Under Explicit Constraints', '18395519', 'System-constraint thesis on GPT-5.2; historical budget-dependent observation.'),
+    ('2026-03-12', 'Cross-Model Semantic Void Convergence Under Embodiment Prompting: Deterministic Silence in GPT-5.2 and Claude Opus 4.6', '18976656', 'Cross-model embodiment observations; later taxonomy distinguishes termination states.'),
+    ('2026-07-29', 'Cross-Vendor Semantic Void Matrix', '21696066', 'Frozen cross-vendor requests, taxonomy, controls and ablations; source of this reanalysis.'),
+    ('2026-09-09', 'Prerequisite-Conditioned Causal Continuation Gating in a Language Model', '22681787', 'PCCG-1: open-weight continuation intervention.'),
+    ('2026-09-12', 'Separating Capability from Permission in a Language Model: Prerequisite-Conditioned Native Continuation Control with Frozen Content', '22730710', 'PCCG-2: engineered EOS-only control with frozen content computation.'),
+    ('2026-09-23', 'What Changed from GPT-3.5 to GPT-4? From Model Capability to Continuation Permission', '22912683', 'Frozen comparison under the full prompt; distinct from a within-model ablation.'),
+    ('2026-09-30', 'The Void: From Zero-Byte Responses to Continuation Control', '23070524', 'Synthesis, taxonomy corrections, related work and continuation/consequence distinction.'),
+    ('2026-10-20', 'Pre-retirement replay of gpt-4-0613 under the frozen GPT-3.5/GPT-4 Void A/B protocol: preregistration', '23521144', 'Public predictions and unchanged full-prompt replay protocol.'),
+    ('2026-10-21', 'Pre-retirement replay of gpt-4-0613 under the frozen GPT-3.5/GPT-4 Void A/B protocol: results', '23521616', 'Full-prompt replay; no ablation observations.'),
+    ('2026-10-22', 'Alignment Is a System Property, Not Just a Model Property', '', 'This retrospective, model-specific reanalysis; DOI pending.'),
+)
+
 def tex(s):
     return ''.join({'_': r'\_', '%': r'\%', '&': r'\&', '#': r'\#', '{': r'\{', '}': r'\}'}.get(c, c) for c in str(s))
 
@@ -144,6 +161,17 @@ def generate(csv_path, out, figure=True):
     for sys in SYSTEMS:
         pr.append([LABEL[sys], tex(PROMPTS[sys][0]) if sys != 'none' else r'No system message supplied.'])
     (out / 'prompts.tex').write_text(tab(['Condition', 'Exact supplied system message'], pr, r'p{0.24\linewidth}p{0.68\linewidth}'))
+    chronology_rows = []
+    for date, title, doi, contribution in CHRONOLOGY:
+        link = r'\href{https://doi.org/10.5281/zenodo.' + doi + '}{' + doi + '}' if doi else 'Pending'
+        chronology_rows.append(' & '.join((date, tex(title), link, tex(contribution))) + r' \\[0.4em]')
+    (out / 'chronology.tex').write_text('\n'.join([
+        r'\begin{longtable}{@{}p{0.105\linewidth}p{0.425\linewidth}p{0.11\linewidth}p{0.28\linewidth}@{}}',
+        r'\caption{Research chronology. DOI links use the prefix 10.5281/zenodo.; dates are the public record publication dates.}\label{tab:chronology}\\',
+        r'\toprule Date & Public record title & DOI suffix & Contribution \\ \midrule\endfirsthead',
+        r'\toprule Date & Public record title & DOI suffix & Contribution \\ \midrule\endhead',
+        *chronology_rows, r'\bottomrule\end{longtable}', '']))
+    (out / 'chronology.json').write_text(json.dumps([dict(zip(('date','title','doi_suffix','contribution'), r)) for r in CHRONOLOGY], indent=2) + '\n')
     (out / 'prompt_hashes.json').write_text(json.dumps({k: {'text': t, 'sha256': h, 'message_supplied': k != 'none'} for k, (t, h) in PROMPTS.items()}, indent=2) + '\n')
     # Every empirical numeral used in prose is a generated macro.
     (out / 'numbers.tex').write_text('\n'.join(r'\expandafter\def\csname data@' + k + r'\endcsname{' + v + '}' for k, v in sorted(values.items())) + '\n')
@@ -202,7 +230,7 @@ def generate(csv_path, out, figure=True):
             canvas.drawCentredString(150 + 330 * frac_tick, 22, f'{100 * frac_tick:.0f}%')
         canvas.drawCentredString(315, 7, 'Observed outcome fraction')
         canvas.save()
-    outputs = ('strata.tex', 'aggregate.tex', 'focal.tex', 'controls.tex', 'cross.tex', 'cross_full.tex', 'no_system_controls.tex', 'cross_per_prompt.json', 'prompts.tex', 'prompt_hashes.json', 'numbers.tex', 'values.json', 'populations.json', 'EVIDENCE_BRIEF.md') + (('ablation.pdf',) if figure else ())
+    outputs = ('strata.tex', 'aggregate.tex', 'focal.tex', 'controls.tex', 'cross.tex', 'cross_full.tex', 'no_system_controls.tex', 'cross_per_prompt.json', 'prompts.tex', 'prompt_hashes.json', 'chronology.tex', 'chronology.json', 'numbers.tex', 'values.json', 'populations.json', 'EVIDENCE_BRIEF.md') + (('ablation.pdf',) if figure else ())
     (out / 'SHA256SUMS').write_text(''.join(sha((out / name).read_bytes()) + '  ' + name + '\n' for name in sorted(outputs)))
     print('CSV SHA-256 verified:', CSV_SHA)
     for key in ('census', 'core.composite', 'lowbudget', 'focal.primary', 'focal.no_output_restriction', 'focal.no_embodiment', 'focal.none'):

@@ -1,0 +1,68 @@
+[
+  {
+    "date": "2025-12-08",
+    "title": "Textual Emergence and the Void: A Framework for Observing High-Order Model Behavior in LLM Systems",
+    "doi_suffix": "17856031",
+    "contribution": "Initial observational framework."
+  },
+  {
+    "date": "2026-01-27",
+    "title": "Alignment Is Correct, Safe, Reproducible Behavior Under Explicit Constraints",
+    "doi_suffix": "18395519",
+    "contribution": "System-constraint thesis on GPT-5.2; historical budget-dependent observation."
+  },
+  {
+    "date": "2026-03-12",
+    "title": "Cross-Model Semantic Void Convergence Under Embodiment Prompting: Deterministic Silence in GPT-5.2 and Claude Opus 4.6",
+    "doi_suffix": "18976656",
+    "contribution": "Cross-model embodiment observations; later taxonomy distinguishes termination states."
+  },
+  {
+    "date": "2026-07-29",
+    "title": "Cross-Vendor Semantic Void Matrix",
+    "doi_suffix": "21696066",
+    "contribution": "Frozen cross-vendor requests, taxonomy, controls and ablations; source of this reanalysis."
+  },
+  {
+    "date": "2026-09-09",
+    "title": "Prerequisite-Conditioned Causal Continuation Gating in a Language Model",
+    "doi_suffix": "22681787",
+    "contribution": "PCCG-1: open-weight continuation intervention."
+  },
+  {
+    "date": "2026-09-12",
+    "title": "Separating Capability from Permission in a Language Model: Prerequisite-Conditioned Native Continuation Control with Frozen Content",
+    "doi_suffix": "22730710",
+    "contribution": "PCCG-2: engineered EOS-only control with frozen content computation."
+  },
+  {
+    "date": "2026-09-23",
+    "title": "What Changed from GPT-3.5 to GPT-4? From Model Capability to Continuation Permission",
+    "doi_suffix": "22912683",
+    "contribution": "Frozen comparison under the full prompt; distinct from a within-model ablation."
+  },
+  {
+    "date": "2026-09-30",
+    "title": "The Void: From Zero-Byte Responses to Continuation Control",
+    "doi_suffix": "23070524",
+    "contribution": "Synthesis, taxonomy corrections, related work and continuation/consequence distinction."
+  },
+  {
+    "date": "2026-10-20",
+    "title": "Pre-retirement replay of gpt-4-0613 under the frozen GPT-3.5/GPT-4 Void A/B protocol: preregistration",
+    "doi_suffix": "23521144",
+    "contribution": "Public predictions and unchanged full-prompt replay protocol."
+  },
+  {
+    "date": "2026-10-21",
+    "title": "Pre-retirement replay of gpt-4-0613 under the frozen GPT-3.5/GPT-4 Void A/B protocol: results",
+    "doi_suffix": "23521616",
+    "contribution": "Full-prompt replay; no ablation observations."
+  },
+  {
+    "date": "2026-10-22",
+    "title": "Alignment Is a System Property, Not Just a Model Property",
+    "doi_suffix": "",
+    "contribution": "This retrospective, model-specific reanalysis; DOI pending."
+  }
+]
